@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" ng-app>
+<html lang="en" ng-app="movieApp">
 <head>
     <meta charset="UTF-8">
     <title>wooaah films</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.23/angular.min.js"></script>
 </head>
-<body ng-style="myStyle">
+<body>
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -15,9 +14,9 @@
 </nav>
 
 
-<div ng-init ="movies=[ {'id': 1, 'title': 'Fight Club', 'genre': 'Drama', 'rating': '18'}, {'id': 2, 'title': 'Pulp Fiction', 'genre': 'Action', 'rating': '18'},{'id': 3, 'title': 'Dunkirk', 'genre': 'Action', 'rating': '18'},{'id': 4, 'title': 'Inception', 'genre': 'Sci-Fi', 'rating': '15'}]">
+<div ng-controller="movieController as movieCtrl">
     <h3><span>Movies what I like</span></h3>
-    <table class="table">
+    <table class="table" ng-style="movieCtrl.color">
         <p><input type="text" placeholder="Search" ng-model="movieSearch"></p>
         <tr>
             <th>id</th>
@@ -25,24 +24,27 @@
             <th>Genre</th>
             <th>Rating</th>
         </tr>
-        <tr ng-repeat="movie in movies | filter:movieSearch" ng-hide="isHidden">
+        <tr ng-repeat="movie in movieCtrl.movies | filter:movieSearch" ng-hide="movieCtrl.isHidden">
             <td>{{movie.id}}</td>
             <td>{{movie.title}}</td>
             <td>{{movie.genre | uppercase}}</td>
             <td>{{movie.rating}}</td>
         </tr>
     </table>
-    Hide/Show: <input type="checkbox" class="btn" ng-model="isHidden"/>
-    <div class="btn-group">
-        <button type="button" class="btn btn-danger" ng-click="myStyle={background:'purple'}">Danger</button>
-        <button type="button" class="btn btn-default" ng-click="myStyle={background:'white   '}">We good</button>
-    </div>
+    <button class="btn-default" ng-click="movieCtrl.hideTable()">Hide movies</button>
+    <button class="btn-danger" ng-click="movieCtrl.changeColour('red')">RED</button>
+    <button class="btn-info" ng-click="movieCtrl.changeColour('blue')">BLUE</button>
+    <button class="btn-success" ng-click="movieCtrl.changeColour('green')">GREEN</button>
+    <button class="btn-default" ng-click="movieCtrl.changeColour('black')">CLEAR</button>
 
     <link rel="stylesheet" href="scripts/bootstrap.min.css">
     <script src="scripts/jquery-2.1.4.min.js"></script>
     <script src="scripts/angular.min.js"></script>
     <script src="scripts/ui-router.min.js"></script>
     <script src="scripts/bootstrap.min.js"></script>
+
+    <script src="app/app.js"></script>
+    <script src="app/controllers/movie-controller.js"></script>
 </div>
 </body>
 </html>
